@@ -8,22 +8,33 @@ import (
 	"fmt"
 
 	"github.com/rbangamm/imageinit/graph/generated"
-	"github.com/rbangamm/imageinit/graph/model"
+	"github.com/rbangamm/imageinit/graph/repository"
+	"github.com/rbangamm/imageinit/utils"
 )
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
+func (r *mutationResolver) CreateUser(ctx context.Context, input repository.NewUser) (*repository.CreateUserResult, error) {
+	user, err := r.userService.CreateUser(ctx, input.Username, input.Password)
+	res := &repository.CreateUserResult{}
+	if err != nil {
+		fmt.Printf("%s, %s, %s", input.Username, input.Password, err)
+		res.Status = string(utils.RequestStatusFailure)
+		res.Error = err.Error()
+		return res, nil
+	}
+	res.ID = user.ID.Hex()
+	res.Status = string(utils.RequestStatusSuccess)
+	return res, err
+}
+
+func (r *mutationResolver) Login(ctx context.Context, input repository.Login) (string, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+func (r *mutationResolver) RefreshToken(ctx context.Context, input repository.RefreshTokenInput) (string, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
-// Query returns generated.QueryResolver implementation.
-func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
-
 type mutationResolver struct{ *Resolver }
-type queryResolver struct{ *Resolver }
