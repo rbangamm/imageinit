@@ -4,7 +4,7 @@ type User {
 }
 
 type CreateUserResult {
-  id: String!
+  token: String!
   status: String!
   error:  String!
 }
@@ -23,9 +23,21 @@ input Login {
   password: String!
 }
 
+type LoginResult {
+  token: String!
+  status: String!
+  error: String!
+}
+
+type RefreshTokenResult {
+  token: String!
+  status: String!
+  error: String!
+}
+
 type Mutation {
   createUser(input: NewUser!): CreateUserResult!
-  login(input: Login!): String!
+  login(input: Login!): LoginResult!
   # we'll talk about this in authentication section
-  refreshToken(input: RefreshTokenInput!): String!
+  refreshToken(input: RefreshTokenInput!): RefreshTokenResult!
 }

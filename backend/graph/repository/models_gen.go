@@ -3,7 +3,7 @@
 package repository
 
 type CreateUserResult struct {
-	ID     string `json:"id"`
+	Token  string `json:"token"`
 	Status string `json:"status"`
 	Error  string `json:"error"`
 }
@@ -13,6 +13,12 @@ type Login struct {
 	Password string `json:"password"`
 }
 
+type LoginResult struct {
+	Token  string `json:"token"`
+	Status string `json:"status"`
+	Error  string `json:"error"`
+}
+
 type NewUser struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -20,6 +26,12 @@ type NewUser struct {
 
 type RefreshTokenInput struct {
 	Token string `json:"token"`
+}
+
+type RefreshTokenResult struct {
+	Token  string `json:"token"`
+	Status string `json:"status"`
+	Error  string `json:"error"`
 }
 
 type User struct {
