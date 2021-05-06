@@ -11,6 +11,7 @@ import (
 	"github.com/rbangamm/imageinit/graph/generated"
 	"github.com/rbangamm/imageinit/repository/user"
 	userservice "github.com/rbangamm/imageinit/service/user"
+	"github.com/rs/cors"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
@@ -41,7 +42,7 @@ func main() {
 	userRepo := user.NewRepository()
 	userService := userservice.NewService(&config, userRepo)
 
-	router.Use(userservice.Middleware(userService))
+	router.Use(userservice.Middleware(userService), cors.Default().Handler)
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{
 		Resolvers: graph.NewResolver(userService),
