@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useContext } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 import TextField from '@material-ui/core/TextField';
@@ -8,6 +8,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
+import { UserContext } from '../hooks/UserContext';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -109,6 +111,8 @@ type State = {
 const Login = () => {
     const classes = useStyles();
     const [state, dispatch] = useReducer(reducer, initialState);
+    const {setToken} = useContext(UserContext);
+    let history = useHistory();
 
     useEffect(() => {
         if (state.username.trim() && state.password.trim()) {
@@ -151,10 +155,12 @@ const Login = () => {
         .then((res) => res.json())
         .then((result) => {
           if (result["data"]["login"]["status"] === "success") {
+            setToken(result["data"]["login"]["token"]);
             dispatch({
               type: 'loginSuccess',
               payload: 'Login Successful'
             });
+            history.push("/dashboard");
           } else {
             dispatch({
               type: 'loginFailed',
