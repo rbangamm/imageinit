@@ -34,6 +34,7 @@ const S3UploadInput = () => {
 
     const [selectedFile, setSelectedFile] = useState<File>();
     const [displayPhotos, setDisplayPhotos] = useState<PhotoProps[]>([]);
+    const [message, setMessage] = useState("");
 
     const Photo : FC<PhotoProps> = ({photoUrl, 
         albumName, photoKey, albumPhotosKey}) => {
@@ -68,8 +69,12 @@ const S3UploadInput = () => {
                         arr.push(p);
                     }
                 });
-                console.log(arr);
                 setDisplayPhotos(arr);
+                if (arr.length > 0) {
+                    setMessage("Click 'X' under the image you would like to delete.");
+                } else {
+                    setMessage("You currently have no images.")
+                }
             };
           });
       }
@@ -132,7 +137,7 @@ const S3UploadInput = () => {
         <input type="file" accept="image/*" onChange={handleFileInput}/>
         <div id="photoDisplay">
             <h2>User: {user.username}</h2>
-            <p>Click on the 'X' to delete the photo</p>
+            <p>{message}</p>
             <div>
                 {displayPhotos.map((p) => {return <Photo {...p}/>})}
             </div>
