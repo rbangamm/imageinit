@@ -51,10 +51,11 @@ const S3UploadInput = () => {
 
     const viewAlbum = (albumName : string) => {
         var albumPhotosKey = encodeURIComponent(albumName) + "/";
-        s3.listObjectsV2({ Prefix: user.username, Bucket: albumBucketName }, function(err, data) {
+        s3.listObjectsV2({ Prefix: user.username + "/", Bucket: albumBucketName }, function(err, data) {
             if (err) {
             return alert("There was an error viewing your album: " + err.message);
           }
+          console.log(user);
 
           let href = "https://s3." + REGION + ".amazonaws.com/";
           let bucketUrl = href + albumBucketName + "/";
