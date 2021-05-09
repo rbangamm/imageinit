@@ -1,5 +1,18 @@
 # Imageinit
 Shopify Fall 2021 Developer Challenge
+
+Demo
+
+https://user-images.githubusercontent.com/29135311/117556883-9ab45280-b03b-11eb-85a2-e32969e59424.mp4
+
+In order, here is what I did in the video:
+1. Created a user "test" with password "test" and logged in
+2. Added two images then logged out
+3. Created another user "test2" with password "test"
+4. Added two different images and logged out
+5. Logged back into "test" to showcase how the previously uploaded images were unaffected
+6. Deleted the two images in "test"
+
 ## Features
 - Account creation
 - Adding images
@@ -29,3 +42,4 @@ In the `backend/` folder,
 ```
 go run server.go
 ```
+
