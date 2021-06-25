@@ -1,5 +1,4 @@
 # Imageinit
-Shopify Fall 2021 Developer Challenge
 
 Demo
 
